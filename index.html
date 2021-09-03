@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		body {
+			background: azure;
+		}
+
+		#txtName, #txtEmail, #txtPhone {
+			/*height: 23px;*/
+		}
+
+		#submit {
+			height: 34px;
+		    width: 100px;
+		    position: relative;
+		    left: 144px;
+		}
+	</style>
+</head>
+<body>
+	<h1 align="center"><br><h2 align="center">Registration Form</h1></h2><br>
+	<table align="center">
+		<form onsubmit="formValidation();">
+			<tr>
+				<td><b>Name:</b></td>
+				<td><input type="text" id="txtName" onkeypress="return isAlpha(event);"></td>
+			</tr>
+			<tr>
+				<td>&emsp;</td>
+			</tr>
+			<tr>
+				<td><b>Email:</b></td>
+				<td><input type="text" id="txtEmail"></td>
+			</tr>
+			<tr>
+				<td style="position: relative; top: 15px;"><b>Phone No:</b></td>
+				<td><input type="text" id="txtPhone" maxlength="14" onkeypress="return isNumber(event);" onkeyup="checkMobileNumber();"><img src="img/logo.png" id="imgLogo" height="50" style="position: relative; top: 15px;"> &emsp;<span id="spanState" style=""></span></td>
+			</tr>
+			<tr>
+				
+				<td><br><input type="submit" id="submit" value="Submit" align="center"></td>
+			</tr>
+
+		</form>
+	</table>
+</body>
+</html>
+
+<script type="text/javascript">
+	function validateEmail(paramEmailID) {
+		// alert(paramEmailID);
+        var filter = /^[0-9a-z.]+\@[a-z0-9]+\.[a-zA-z0-9]{2,4}$/;
+        
+        if (filter.test(paramEmailID)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+
+
+    function isAlpha(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 &&  charCode != 32 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+          return false;
+      }
+      return true;
+  	}
+
+  	function formValidation() {
+  		let emailID = document.getElementById('txtEmail').value;
+  		if(emailID == "") {
+  			alert("Please Enter Email Address");
+  			return false;
+  		}
+
+  		if(!validateEmail(emailID)) {
+  			alert("Please Enter Correct Email Address");
+  			return false;
+  		}
+
+  	}
+
+  	function checkMobileNumber() {
+
+  		let lclStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman & Diu", "Delhi", "Jammu & Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
+
+  		let lclStateCode = ["650", "651", "652", "653", "654", "655", "656", "657", "658", "659", "660", "661", "662", "663", "664", "665", "666", "667", "668", "669", "670", "671", "672", "673", "674", "675", "676", "677", "678", "679", "680", "681", "682", "683", "684", "685"]
+
+  		let mobileno = document.getElementById('txtPhone').value;
+  		if(mobileno.length == 3) {
+  			document.getElementById('txtPhone').value = "("+mobileno+")"+"-";
+  			
+  		}
+
+  		if(mobileno.length == 9) {
+  			document.getElementById('txtPhone').value = mobileno+"-";
+
+  		}
+
+  		if(mobileno >= 621 && mobileno <= 799) {
+  			document.getElementById("imgLogo").src="img/rel.png";
+  		}
+
+  		if(mobileno >= 801 && mobileno <= 920) {
+  			document.getElementById("imgLogo").src="img/idea.png";
+  		}
+
+  		if(mobileno >= 921 && mobileno <= 999) {
+  			document.getElementById("imgLogo").src="img/vodafone.png";
+  		}
+
+
+
+  		if(mobileno.length == 3) {
+	  		if(mobileno < 621) {
+	  			alert("Invalid Mobile Number");
+	  			document.getElementById('txtPhone').value = "";
+	  		}
+	  	}
+
+	  	if(mobileno.length == 9) {
+	  		let lclSubstring = mobileno.substring(6,9);
+	  		let lclSubstring1 = mobileno.substring(8,9);
+	  		// alert(lclSubstring);
+  			if(lclSubstring >= 650 && lclSubstring <= 685) {
+  				alert(lclStates[lclSubstring1]);
+	  			document.getElementById('spanState').innerHTML = lclStates[lclSubstring1];
+	  		}
+  		}
+  	}
+
+
+</script>
